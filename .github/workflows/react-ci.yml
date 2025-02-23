@@ -25,8 +25,8 @@ jobs:
 
       - name: Run Biome (fix & check)
         run: |
-          npm run biome fix   # 自動修正の実行
-          npm run biome check   # 修正後のチェック
+          npm run biome fix
+          npm run biome check
 
       - name: Run Lint
         run: npm run lint
