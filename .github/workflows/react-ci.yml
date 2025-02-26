@@ -17,10 +17,13 @@ jobs:
           node-version: "20"
           cache: "pnpm"
 
+      - name: Install pnpm
+        run: npm install -g pnpm
+
       - name: Install dependencies
         run: pnpm install
 
-      - name: Build
+      - name: Run Build
         run: pnpm build
 
       - name: Run Biome (fix & check)
