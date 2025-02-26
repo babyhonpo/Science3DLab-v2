@@ -4,11 +4,11 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "pnpm vite",
-    "build": "pnpm tsc && vite build",
-    "lint": "pnpm eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "pnpm vite preview",
-    "biome": "pnpm biome"
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "lint": "eslint . --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview",
+    "biome": "npx biome check --write && biome format --write"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -26,6 +26,7 @@
     "uuid": "^11.0.5"
   },
   "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
     "@eslint/compat": "^1.2.7",
     "@eslint/js": "^9.17.0",
     "@types/node": "^22.10.10",

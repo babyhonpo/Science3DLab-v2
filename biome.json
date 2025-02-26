@@ -27,7 +27,7 @@
     "formatWithErrors": false,
     "ignore": [],
     "indentStyle": "space",
-    "indentWidth": 4,
+    "indentWidth": 2,
     "lineWidth": 120,
     "lineEnding": "crlf",
     "attributePosition": "auto",
@@ -49,13 +49,13 @@
   "files": {
     "ignoreUnknown": false,
     "ignore": ["dist", ".eslintrc.cjs", ".next", "node_modules", ".vscode"],
-    "include": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"]
+    "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.js", "src/**/*.jsx"]
   },
   "javascript": {
     "formatter": {
       "jsxQuoteStyle": "double",
       "trailingCommas": "es5",
-      "semicolons": "asNeeded",
+      "semicolons": "always",
       "arrowParentheses": "always",
       "quoteStyle": "double",
       "quoteProperties": "asNeeded",

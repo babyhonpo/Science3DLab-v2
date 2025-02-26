@@ -5,8 +5,8 @@ import { Top } from "./route/Top.tsx";
 const App = () => {
   return (
     <Routes>
-      <Route path='/' element={<Top />} />
-      <Route path='/home' element={<Home />} />
+      <Route path="/" element={<Top />} />
+      <Route path="/home" element={<Home />} />
     </Routes>
   );
 };

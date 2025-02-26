@@ -9,19 +9,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Setup Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
         with:
           node-version: "20"
+          cache: "pnpm"
 
-        # プロジェクトで必要な依存関係をインストールするステップ
       - name: Install dependencies
-        run: pnpm install # package.jsonとpackage-lock.jsonに基づいて、再現性のあるクリーンインストールを実行
+        run: pnpm install
 
       - name: Build
-        run: pnpm run build
+        run: pnpm build
 
       - name: Run Biome (fix & check)
         run: |
