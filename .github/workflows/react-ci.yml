@@ -30,10 +30,8 @@ jobs:
       - name: Run Build
         run: pnpm build
 
-      - name: Run Biome (fix & check)
-        run: |
-          pnpm run biome fix --write
-          pnpm run biome check --write
+      - name: Run Biome
+        run: pnpm run biome
 
       - name: Run Lint
         run: pnpm run lint
