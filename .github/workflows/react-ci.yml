@@ -18,18 +18,18 @@ jobs:
 
         # プロジェクトで必要な依存関係をインストールするステップ
       - name: Install dependencies
-        run: npm install # package.jsonとpackage-lock.jsonに基づいて、再現性のあるクリーンインストールを実行
+        run: pnpm install # package.jsonとpackage-lock.jsonに基づいて、再現性のあるクリーンインストールを実行
 
       - name: Build
-        run: npm run build
+        run: pnpm run build
 
       - name: Run Biome (fix & check)
         run: |
-          npm run biome fix
-          npm run biome check
+          pnpm run biome fix
+          pnpm run biome check
 
       - name: Run Lint
-        run: npm run lint
+        run: pnpm run lint
 
       - name: Run Test
-        run: npm run test
+        run: pnpm run test
