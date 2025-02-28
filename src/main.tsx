@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 import { LibraryProvider, ContextProvider } from "./provider";
 import { Canvas } from "@react-three/fiber";
-import { Stars } from "lucide-react";
+import { Stars } from "@react-three/drei";
 
 function StarBackground() {
   return (
@@ -30,7 +30,6 @@ function StarBackground() {
     </Canvas>
   );
 }
-
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
