@@ -24,6 +24,7 @@ const App = () => {
         <Route path='/test/effect' element={<Effect />} />
       </Routes>
     </ThemeProvider>
+
   );
 };
 
