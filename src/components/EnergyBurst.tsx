@@ -1,11 +1,6 @@
-import React, { useRef, useMemo } from "react";
 import { useFrame } from "@react-three/fiber";
-import {
-  Color,
-  ShaderMaterial,
-  AdditiveBlending,
-  PointLight,
-} from "three";
+import { useMemo, useRef } from "react";
+import { AdditiveBlending, Color, PointLight, ShaderMaterial } from "three";
 
 const particleCount = 2000;
 
@@ -100,7 +95,7 @@ export function EnergyBurst() {
     });
   }, []);
 
-  useFrame((state, delta) => {
+  useFrame((delta) => {
     if (points.current) {
       points.current.material.uniforms.uTime.value += delta;
 
@@ -122,37 +117,37 @@ export function EnergyBurst() {
       <points ref={points}>
         <bufferGeometry>
           <bufferAttribute
-            attach='attributes-position'
+            attach="attributes-position"
             count={particleCount}
             array={positions}
             itemSize={3}
           />
           <bufferAttribute
-            attach='attributes-velocity'
+            attach="attributes-velocity"
             count={particleCount}
             array={velocities}
             itemSize={3}
           />
           <bufferAttribute
-            attach='attributes-delay'
+            attach="attributes-delay"
             count={particleCount}
             array={delays}
             itemSize={1}
           />
           <bufferAttribute
-            attach='attributes-size'
+            attach="attributes-size"
             count={particleCount}
             array={sizes}
             itemSize={1}
           />
           <bufferAttribute
-            attach='attributes-color'
+            attach="attributes-color"
             count={particleCount}
             array={colors}
             itemSize={3}
           />
         </bufferGeometry>
-        <primitive object={shaderMaterial} attach='material' />
+        <primitive object={shaderMaterial} attach="material" />
       </points>
       <primitive
         object={new PointLight(0xff7700, 50, 20, 2)}

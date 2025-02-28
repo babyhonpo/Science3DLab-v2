@@ -1,7 +1,6 @@
-import { useRef, useMemo } from 'react';
-import * as THREE from 'three';
-import { useFrame } from '@react-three/fiber';
-import React from 'react';
+import { useFrame } from "@react-three/fiber";
+import { useMemo, useRef } from "react";
+import * as THREE from "three";
 
 const lightningVertexShader = `
   varying vec2 vUv;
@@ -66,7 +65,7 @@ interface LightningEffectProps {
 
 export function LightningEffect({ position }: LightningEffectProps) {
   const materialRef = useRef<THREE.ShaderMaterial>(null);
-  
+
   const uniforms = useMemo(
     () => ({
       time: { value: 0 },
@@ -80,34 +79,48 @@ export function LightningEffect({ position }: LightningEffectProps) {
     }
   });
 
-  const createLightningBranch = (startPoint: THREE.Vector3, direction: THREE.Vector3, length: number, branchProbability: number = 0.6, depth: number = 0): THREE.BufferGeometry[] => {
+  const createLightningBranch = (
+    startPoint: THREE.Vector3,
+    direction: THREE.Vector3,
+    length: number,
+    branchProbability = 0.6,
+    depth = 0
+  ): THREE.BufferGeometry[] => {
     const geometries: THREE.BufferGeometry[] = [];
     const segments = 8;
     const points: THREE.Vector3[] = [];
-    
+
     let currentPoint = startPoint.clone();
     const segmentLength = length / segments;
-    
+
     for (let i = 0; i <= segments; i++) {
       points.push(currentPoint.clone());
-      
+
       if (i < segments) {
         const randomOffset = new THREE.Vector3(
           (Math.random() - 0.5) * 0.2 * length,
           (Math.random() - 0.5) * 0.2 * length,
           (Math.random() - 0.5) * 0.2 * length
         );
-        
-        const nextPoint = currentPoint.clone()
+
+        const nextPoint = currentPoint
+          .clone()
           .add(direction.clone().multiplyScalar(segmentLength))
           .add(randomOffset);
-        
+
         // Create branches
         if (depth < 2 && Math.random() < branchProbability) {
-          const branchDirection = direction.clone()
-            .applyAxisAngle(new THREE.Vector3(0, 1, 0), (Math.random() - 0.5) * Math.PI * 0.5)
-            .applyAxisAngle(new THREE.Vector3(1, 0, 0), (Math.random() - 0.5) * Math.PI * 0.5);
-          
+          const branchDirection = direction
+            .clone()
+            .applyAxisAngle(
+              new THREE.Vector3(0, 1, 0),
+              (Math.random() - 0.5) * Math.PI * 0.5
+            )
+            .applyAxisAngle(
+              new THREE.Vector3(1, 0, 0),
+              (Math.random() - 0.5) * Math.PI * 0.5
+            );
+
           const branchGeometries = createLightningBranch(
             currentPoint,
             branchDirection,
@@ -117,22 +130,28 @@ export function LightningEffect({ position }: LightningEffectProps) {
           );
           geometries.push(...branchGeometries);
         }
-        
+
         currentPoint = nextPoint;
       }
     }
-    
+
     const curve = new THREE.CatmullRomCurve3(points);
-    const geometry = new THREE.TubeGeometry(curve, 20, 0.02 * (1 - depth * 0.3), 8, false);
+    const geometry = new THREE.TubeGeometry(
+      curve,
+      20,
+      0.02 * (1 - depth * 0.3),
+      8,
+      false
+    );
     geometries.push(geometry);
-    
+
     return geometries;
   };
 
   const branches = useMemo(() => {
     const allGeometries: THREE.BufferGeometry[] = [];
     const numMainBranches = 12; // Increased number of main branches
-    
+
     for (let i = 0; i < numMainBranches; i++) {
       const angle = (i / numMainBranches) * Math.PI * 2;
       const direction = new THREE.Vector3(
@@ -140,7 +159,7 @@ export function LightningEffect({ position }: LightningEffectProps) {
         (Math.random() - 0.5) * 2, // Varying vertical direction
         Math.sin(angle)
       ).normalize();
-      
+
       const length = 2 + Math.random() * 2;
       const branchGeometries = createLightningBranch(
         new THREE.Vector3(0, 0, 0),
@@ -149,7 +168,7 @@ export function LightningEffect({ position }: LightningEffectProps) {
       );
       allGeometries.push(...branchGeometries);
     }
-    
+
     return allGeometries;
   }, []);
 
@@ -168,7 +187,7 @@ export function LightningEffect({ position }: LightningEffectProps) {
           />
         </mesh>
       ))}
-      
+
       <pointLight color="#ffff80" intensity={8} distance={6} decay={2} />
       <pointLight color="#ffffff" intensity={4} distance={3} decay={2} />
     </group>

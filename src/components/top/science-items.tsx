@@ -1,16 +1,28 @@
-import { useRef } from "react"
-import { Cylinder, Torus, Sphere, Line, Cone, Ring, Box, Icosahedron } from "@react-three/drei"
-import type { GroupProps } from "@react-three/fiber"
-import type { Group } from "three"
-import React from "react"
+import {
+  Box,
+  Cone,
+  Cylinder,
+  Icosahedron,
+  Line,
+  Ring,
+  Sphere,
+  Torus,
+} from "@react-three/drei";
+import type { GroupProps } from "@react-three/fiber";
+import { useRef } from "react";
+import type { Group } from "three";
 
 interface ScienceItemProps extends GroupProps {
-  color?: string
-  type: "structure" | "magnet" | "flask" | "tube" | "bulb"
+  color?: string;
+  type: "structure" | "magnet" | "flask" | "tube" | "bulb";
 }
 
-export function ScienceItem({ color = "white", type, ...props }: ScienceItemProps) {
-  const groupRef = useRef<Group>(null)
+export function ScienceItem({
+  color = "white",
+  type,
+  ...props
+}: ScienceItemProps) {
+  const groupRef = useRef<Group>(null);
 
   // 分子構造体 - 水分子H2Oをモチーフにした構造
   const Structure = () => (
@@ -32,7 +44,10 @@ export function ScienceItem({ color = "white", type, ...props }: ScienceItemProp
         [0.7, 0.4, 0],
       ].map((pos, i) => (
         <group key={i}>
-          <Sphere args={[0.25, 32, 32]} position={pos as [number, number, number]}>
+          <Sphere
+            args={[0.25, 32, 32]}
+            position={pos as [number, number, number]}
+          >
             <meshPhysicalMaterial
               color="#8888ff"
               metalness={0.3}
@@ -42,7 +57,10 @@ export function ScienceItem({ color = "white", type, ...props }: ScienceItemProp
             />
           </Sphere>
           {/* 共有結合を表す電子雲 */}
-          <Icosahedron args={[0.15]} position={[pos[0] * 0.6, pos[1] * 0.6, pos[2]]}>
+          <Icosahedron
+            args={[0.15]}
+            position={[pos[0] * 0.6, pos[1] * 0.6, pos[2]]}
+          >
             <meshPhysicalMaterial
               color="#44aaff"
               transparent
@@ -53,7 +71,13 @@ export function ScienceItem({ color = "white", type, ...props }: ScienceItemProp
             />
           </Icosahedron>
           {/* 結合線 */}
-          <Line points={[[0, 0, 0], pos as [number, number, number]]} color="#ffffff" lineWidth={3} segments dashed={false} />
+          <Line
+            points={[[0, 0, 0], pos as [number, number, number]]}
+            color="#ffffff"
+            lineWidth={3}
+            segments
+            dashed={false}
+          />
         </group>
       ))}
       {/* 電子軌道を表現 */}
@@ -63,7 +87,7 @@ export function ScienceItem({ color = "white", type, ...props }: ScienceItemProp
         </Torus>
       </group>
     </group>
-  )
+  );
 
   // U字磁石 - より物理的な表現
   const Magnet = () => (
@@ -72,18 +96,31 @@ export function ScienceItem({ color = "white", type, ...props }: ScienceItemProp
       <group rotation={[Math.PI / 2, 0, 0]}>
         {/* メインボディ */}
         <Torus args={[1, 0.25, 32, 32]} rotation={[0, 0, Math.PI]}>
-          <meshStandardMaterial color="#505050" metalness={0.9} roughness={0.2} envMapIntensity={1} />
+          <meshStandardMaterial
+            color="#505050"
+            metalness={0.9}
+            roughness={0.2}
+            envMapIntensity={1}
+          />
         </Torus>
         {/* 磁極の詳細表現 */}
         {[1, -1].map((x, i) => (
           <group key={i} position={[x, 0, -0.5]}>
             {/* 極の本体 */}
             <Cylinder args={[0.35, 0.35, 1.2]} rotation={[Math.PI / 2, 0, 0]}>
-              <meshStandardMaterial color={i === 0 ? "#ff2222" : "#2222ff"} metalness={0.8} roughness={0.2} />
+              <meshStandardMaterial
+                color={i === 0 ? "#ff2222" : "#2222ff"}
+                metalness={0.8}
+                roughness={0.2}
+              />
             </Cylinder>
             {/* 極の縁取り */}
             <Ring args={[0.25, 0.35, 32]} position={[0, 0, 0.6]}>
-              <meshStandardMaterial color="#404040" metalness={0.9} roughness={0.1} />
+              <meshStandardMaterial
+                color="#404040"
+                metalness={0.9}
+                roughness={0.1}
+              />
             </Ring>
             {/* 磁力線を表現（半透明の円環） */}
             {Array.from({ length: 3 }).map((_, j) => (
@@ -93,7 +130,11 @@ export function ScienceItem({ color = "white", type, ...props }: ScienceItemProp
                 position={[0, 0, 0.7]}
                 rotation={[Math.PI / 2, 0, 0]}
               >
-                <meshStandardMaterial color={i === 0 ? "#ff6666" : "#6666ff"} transparent opacity={0.2 - j * 0.05} />
+                <meshStandardMaterial
+                  color={i === 0 ? "#ff6666" : "#6666ff"}
+                  transparent
+                  opacity={0.2 - j * 0.05}
+                />
               </Ring>
             ))}
           </group>
@@ -102,15 +143,23 @@ export function ScienceItem({ color = "white", type, ...props }: ScienceItemProp
       {/* 台座（より詳細な表現） */}
       <group position={[0, -1.2, 0]}>
         <Box args={[3, 0.2, 1]}>
-          <meshStandardMaterial color="#404040" metalness={0.7} roughness={0.3} />
+          <meshStandardMaterial
+            color="#404040"
+            metalness={0.7}
+            roughness={0.3}
+          />
         </Box>
         {/* 台座の装飾的な溝 */}
         <Box args={[2.8, 0.22, 0.9]} position={[0, 0.01, 0]}>
-          <meshStandardMaterial color="#303030" metalness={0.8} roughness={0.2} />
+          <meshStandardMaterial
+            color="#303030"
+            metalness={0.8}
+            roughness={0.2}
+          />
         </Box>
       </group>
     </group>
-  )
+  );
 
   // 三角フラスコ - より精密なガラス表現と内容物
   const Flask = () => (
@@ -157,17 +206,30 @@ export function ScienceItem({ color = "white", type, ...props }: ScienceItemProp
         {/* 首の縁（二重リング） */}
         <group position={[0, 0.6, 0]}>
           <Ring args={[0.19, 0.25, 32]}>
-            <meshStandardMaterial color="#dddddd" metalness={0.5} roughness={0.2} />
+            <meshStandardMaterial
+              color="#dddddd"
+              metalness={0.5}
+              roughness={0.2}
+            />
           </Ring>
           <Ring args={[0.18, 0.22, 32]} position={[0, 0.05, 0]}>
-            <meshStandardMaterial color="#bbbbbb" metalness={0.6} roughness={0.2} />
+            <meshStandardMaterial
+              color="#bbbbbb"
+              metalness={0.6}
+              roughness={0.2}
+            />
           </Ring>
         </group>
       </group>
       {/* 液面の反射効果 */}
-      <pointLight position={[0, -1.1, 0]} intensity={0.2} color={color} distance={1.5} />
+      <pointLight
+        position={[0, -1.1, 0]}
+        intensity={0.2}
+        color={color}
+        distance={1.5}
+      />
     </group>
-  )
+  );
 
   // 試験管 - より精密なガラス表現と内容物の動的表現
   const Tube = () => (
@@ -189,19 +251,37 @@ export function ScienceItem({ color = "white", type, ...props }: ScienceItemProp
       {/* 試験管の底（二重構造） */}
       <group position={[0, -1.25, 0]}>
         <Cylinder args={[0.3, 0.3, 0.1, 32]}>
-          <meshPhysicalMaterial color="#ffffff" transmission={0.9} thickness={0.3} roughness={0.1} ior={1.5} />
+          <meshPhysicalMaterial
+            color="#ffffff"
+            transmission={0.9}
+            thickness={0.3}
+            roughness={0.1}
+            ior={1.5}
+          />
         </Cylinder>
         <Cylinder args={[0.28, 0.28, 0.12, 32]} position={[0, 0.01, 0]}>
-          <meshStandardMaterial color="#dddddd" metalness={0.5} roughness={0.2} />
+          <meshStandardMaterial
+            color="#dddddd"
+            metalness={0.5}
+            roughness={0.2}
+          />
         </Cylinder>
       </group>
       {/* 試験管の縁（二重リング） */}
       <group position={[0, 1.25, 0]}>
         <Ring args={[0.25, 0.3, 32]}>
-          <meshStandardMaterial color="#dddddd" metalness={0.5} roughness={0.2} />
+          <meshStandardMaterial
+            color="#dddddd"
+            metalness={0.5}
+            roughness={0.2}
+          />
         </Ring>
         <Ring args={[0.24, 0.28, 32]} position={[0, 0.02, 0]}>
-          <meshStandardMaterial color="#bbbbbb" metalness={0.6} roughness={0.2} />
+          <meshStandardMaterial
+            color="#bbbbbb"
+            metalness={0.6}
+            roughness={0.2}
+          />
         </Ring>
       </group>
       {/* 内容物（液体と気泡効果） */}
@@ -233,9 +313,14 @@ export function ScienceItem({ color = "white", type, ...props }: ScienceItemProp
         ))}
       </group>
       {/* 液面の光沢効果 */}
-      <pointLight position={[0, -0.25, 0]} intensity={0.2} color={color} distance={1} />
+      <pointLight
+        position={[0, -0.25, 0]}
+        intensity={0.2}
+        color={color}
+        distance={1}
+      />
     </group>
-  )
+  );
 
   // 電球 - より詳細な構造と発光効果
   const Bulb = () => (
@@ -306,8 +391,16 @@ export function ScienceItem({ color = "white", type, ...props }: ScienceItemProp
         {/* ネジ山の表現 */}
         <group position={[0, -0.3, 0]}>
           {Array.from({ length: 4 }).map((_, i) => (
-            <Cylinder key={i} args={[0.25, 0.25, 0.08, 32]} position={[0, i * 0.1, 0]}>
-              <meshStandardMaterial color="#b4941f" metalness={0.9} roughness={0.4} />
+            <Cylinder
+              key={i}
+              args={[0.25, 0.25, 0.08, 32]}
+              position={[0, i * 0.1, 0]}
+            >
+              <meshStandardMaterial
+                color="#b4941f"
+                metalness={0.9}
+                roughness={0.4}
+              />
             </Cylinder>
           ))}
         </group>
@@ -317,10 +410,20 @@ export function ScienceItem({ color = "white", type, ...props }: ScienceItemProp
         </Cylinder>
       </group>
       {/* 発光効果 */}
-      <pointLight position={[0, 0, 0]} intensity={1} color={color} distance={3} />
-      <pointLight position={[0, 0, 0]} intensity={0.5} color="#ffffff" distance={1.5} />
+      <pointLight
+        position={[0, 0, 0]}
+        intensity={1}
+        color={color}
+        distance={3}
+      />
+      <pointLight
+        position={[0, 0, 0]}
+        intensity={0.5}
+        color="#ffffff"
+        distance={1.5}
+      />
     </group>
-  )
+  );
 
   const ItemComponent = {
     structure: Structure,
@@ -328,12 +431,11 @@ export function ScienceItem({ color = "white", type, ...props }: ScienceItemProp
     flask: Flask,
     tube: Tube,
     bulb: Bulb,
-  }[type]
+  }[type];
 
   return (
     <group ref={groupRef} {...props}>
       <ItemComponent />
     </group>
-  )
+  );
 }
-

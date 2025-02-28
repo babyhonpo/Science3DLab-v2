@@ -1,7 +1,7 @@
-import { useRef } from "react";
-import { Sphere, Line } from "@react-/drei";
+import { Line, Sphere } from "@react-/drei";
 import type { GroupProps } from "@react-/fiber";
-import { Vector3, Group } from "three";
+import { useRef } from "react";
+import { type Group, Vector3 } from "three";
 interface MoleculeProps extends GroupProps {
   color?: string;
 }
