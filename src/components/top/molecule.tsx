@@ -1,23 +1,21 @@
-import { useRef } from "react"
-import { Sphere, Line } from "@react-three/drei"
-import * as THREE from "three"
-import type { GroupProps } from "@react-three/fiber"
-import React from "react"
-
+import { useRef } from "react";
+import { Sphere, Line } from "@react-/drei";
+import type { GroupProps } from "@react-/fiber";
+import { Vector3, Group } from "three";
 interface MoleculeProps extends GroupProps {
-  color?: string
+  color?: string;
 }
 
 export function Molecule({ color = "white", ...props }: MoleculeProps) {
-  const groupRef = useRef<THREE.Group>(null);
+  const groupRef = useRef<Group>(null);
 
   // より複雑な分子構造の座標
   const points = [
-    new THREE.Vector3(-0.5, 0, 0),
-    new THREE.Vector3(0.5, 0, 0),
-    new THREE.Vector3(0, 0.866, 0),
-    new THREE.Vector3(0, 0, 0.866),
-  ]
+    new Vector3(-0.5, 0, 0),
+    new Vector3(0.5, 0, 0),
+    new Vector3(0, 0.866, 0),
+    new Vector3(0, 0, 0.866),
+  ];
 
   return (
     <group ref={groupRef} {...props}>
@@ -48,9 +46,8 @@ export function Molecule({ color = "white", ...props }: MoleculeProps) {
             color={color}
             lineWidth={3}
           />
-        )),
+        ))
       )}
     </group>
-  )
+  );
 }
-
