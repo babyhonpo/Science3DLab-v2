@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router";
-import { Home } from "./route/Home.tsx";
-import { Top } from "./route/Top.tsx";
+import Top from "./route/Top";
+import Home from "./route/Home";
 
 const App = () => {
   return (
